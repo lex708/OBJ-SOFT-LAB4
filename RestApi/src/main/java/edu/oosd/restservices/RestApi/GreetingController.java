@@ -18,8 +18,9 @@ public class GreetingController {
 
     @GetMapping ("/greeting")
     public ResponseEntity<Greeting> greeting(@RequestParam(defaultValue = "World") String name) {
-        if (name == null|| name.trim().isEmpty()) {
+        if (name == null|| name.trim().isEmpty()|| name.equalsIgnoreCase("error")) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
         }
         Greeting greeting = new Greeting(
                 counter.incrementAndGet(),
