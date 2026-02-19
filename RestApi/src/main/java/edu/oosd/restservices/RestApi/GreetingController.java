@@ -18,10 +18,13 @@ public class GreetingController {
 
     @GetMapping ("/greeting")
     public ResponseEntity<Greeting> greeting(@RequestParam(defaultValue = "World") String name) {
+        if (name == null|| name.trim().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         Greeting greeting = new Greeting(
                 counter.incrementAndGet(),
                 String.format(template, name),
-                Map.of("self", "/greeting?name=" +name, "home", "/"));
+                Map.of("self", "/greeting?name=" + name, "home", "/"));
         return new ResponseEntity<>(greeting, HttpStatus.OK);
 
 
